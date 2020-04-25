@@ -1,0 +1,173 @@
+<html>
+	{% load static %}
+	<head>
+		<title> Flairme: Home </title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+	</head>
+
+	<style>
+
+		.imgCenter {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+			/*width: 50%;*/
+		}
+
+		.caption {
+			position: absolute;
+			left: 0;
+			top: 50%;
+			width: 100%;
+			text-align: center;
+			color: #000;
+		}
+
+		.caption span.border {
+			background-color: #111;
+			color: #fff;
+			padding: 18px;
+			font-size: 25px;
+			letter-spacing: 10px;
+		}
+
+		
+		body, html {
+		  height: 100%;
+		  margin: 0;
+		  font: 400 15px/1.8 "Lato", sans-serif;
+		  color: #777;
+		}
+
+		.bgimg-1, .bgimg-2, .bgimg-3 {
+		  position: relative;
+		  opacity: 0.65;
+		  background-attachment: fixed;
+		  background-position: center;
+		  background-repeat: no-repeat;
+		  background-size: cover;
+
+		}
+		.bgimg-1 {
+		  background-image: url("{% static "india_flag.jpg" %}");
+		  min-height: 100%;
+		}
+
+		.bgimg-2 {
+		  background-image: url("{% static "r_india_front_page.png" %}");
+		  min-height: 500px;
+		}
+
+		.bgimg-3 {
+		  background-image: url("{% static "peacock.jpg" %}");
+		  min-height: 500px;
+		}
+
+		h3 {
+		  letter-spacing: 5px;
+		  text-transform: uppercase;
+		  font: 20px "Lato", sans-serif;
+		  color: #111;
+		}
+
+		/* Turn off parallax scrolling for tablets and phones */
+		@media only screen and (max-device-width: 1024px) {
+		  .bgimg-1, .bgimg-2, .bgimg-3 {
+		    background-attachment: scroll;
+		  }
+		}
+
+	</style>
+
+	<body>
+		<nav class="navbar fixed-top navbar-dark bg-dark navbar-expand-lg">
+			
+			<a class="navbar-brand" href="#">
+				<img src="{% static "reddit-logo.png" %}" width="30" height="30" alt="">
+				FlairMe
+			</a>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/home/">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#search">FlairmeReddit</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/statistics/">Statistics</a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0" action="/query/" method="post">
+					{% csrf_token %}
+					{{ form.url }}
+					<input type="submit" value="Submit">
+				</form>
+			</div>
+		</nav>
+		<div class="bgimg-1">
+			<img src="{% static "reddit-logo.png" %}" height="400" width="400" class="imgCenter" style="margin-top: 55px;">
+			<br id="search">
+			<div class="caption">
+				<span class="border"> FlairMe </span>
+				<br><br><br> 
+				<span class="border"> FIND OUT THE APPROPRIATE FLAIRS FOR YOUR r/India POSTS! </span>
+				<br><br><br><br>
+				<form action="/query/" method="post">
+					{% csrf_token %}
+					<span class="border">
+						{{ form.url }}
+						<input type="submit" value="Submit">
+					</span>
+				</form>
+			</div>
+		</div>
+
+		<div style="color: #777;background-color:white;text-align:center;padding:50px 80px;text-align: justify;">
+		  <h3 style="text-align:center;">How to use FlairMe</h3>
+		  <p>FlairMe is an application designed to assign appropriate flairs to any posts that are posted on the r/India subreddit. To begin the process, simply place the reddit url for the post that you wish to get the flair for and then press "Submit". You will be redirected to a new page with the correct prediction as required. You also receive the percentage appropriateness for a range of flairs to choose from. Prediction is based on the posts that are posted on the r/India subreddit. There are other features to explore on this website. Scroll down for details.</p>
+		</div>
+
+		<div class="bgimg-2">
+		  <div class="caption">
+		  <span class="border">THE STATISTICS</span>
+		  </div>
+		</div>
+
+		<div style="position:relative;">
+		  <div style="color:#ddd;background-color:#282E34;text-align:center;padding:50px 80px;text-align: justify;">
+		  <p>Statistics tab is now online on FlairMe! You can now view all the details from posts on r/India based on flairs, such as current trends on r/India and get more information about the community!</p><br>
+		  <form action="/statistics/">
+		  	<div class="caption">
+		  		<input type="submit" value="Statistics">
+		  	</div>
+		  </form>
+		  </div>
+		</div>
+
+		<div class="bgimg-3">
+		  <div class="caption">
+		  <span class="border">MORE COMMUNITIES AND FEATURES COMING SOON!</span>
+		  </div>
+		</div>
+
+		<div class="bgimg-1">
+		  <div class="caption">
+		  <span class="border">CONTACT US!</span>
+		  <br><br><br><br>
+		  <span class="border">GitHub: https://github.com/KillingJoke42</span>
+		  <br><br>
+		  <span class="border">LinkedIn: https://www.linkedin.com/in/anant-raina-4b4282190/</span>
+		  <br><br>
+		  <span class="border">Discord: KillingJoke42#6392</span>
+		  <br><br>
+		  </div>
+		</div>
+
+	</body>
+</html>

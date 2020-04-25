@@ -1,0 +1,92 @@
+<html>
+	{% load static %}
+	<head>
+		<title> Flairme: My Prediction </title>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+		<style>
+			body, html {
+			  height: 100%;
+			  margin: 0;
+			  font: 400 15px/1.8 "Lato", sans-serif;
+			  color: #777;
+			}
+			.bgimg-1, .bgimg-2, .bgimg-3 {
+				position: relative;
+				opacity: 0.65;
+				background-attachment: fixed;
+				background-position: center;
+				background-repeat: no-repeat;
+				background-size: cover
+			}
+			.bgimg-1 {
+				background-image: url("{% static image_bg %}");
+				min-height: 100%;
+			}
+			.caption {
+				position: absolute;
+				left: 0;
+				top: 50%;
+				width: 100%;
+				text-align: center;
+				color: #000;
+			}
+			.caption span.border {
+				background-color: #111;
+				color: #fff;
+				padding: 18px;
+				font-size: 25px;
+				letter-spacing: 10px;
+			}
+		</style>
+
+		<script type="text/javascript">
+			let root = document.documentElement.bgimg-1;
+			var pred = {{ prediction }};
+			if (pred == "Non-Political")
+			{
+				root.style.setProperty('background-image', url("{% static "non-political.jpeg" %}"));
+			}
+		</script>
+	</head>
+
+	<body>
+		<nav class="navbar fixed-top navbar-dark bg-dark navbar-expand-lg">
+			
+			<a class="navbar-brand" href="#">
+				<img src="{% static "reddit-logo.png" %}" width="30" height="30" alt="">
+				FlairMe
+			</a>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="/home/">Home <span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/home/">FlairmeReddit</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="/statistics/">Statistics</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="bgimg-1">
+			<div class="caption">
+				<span class="border">MY PREDICTION:</span>
+				<span class="border">{{ prediction }}</span>
+				<br><br><br>
+				<form action="/home/" method="post">
+					{% csrf_token %}
+					<input type="submit" value="Predict Another">
+				</form>
+			</div>
+		</div>
+	</body>
+</html>
