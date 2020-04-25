@@ -1,4 +1,6 @@
 #django respone libraries
+import os
+
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
 from django.http import JsonResponse
@@ -22,7 +24,7 @@ image_classes = ["corona.jpeg", "food.jpeg", "india_flag.jpeg", "money.jpeg", "n
 
 # Redirect "/" to 'home/'
 def index(request):
-	return redirect("home/")
+	return redirect('home/')
 
 # Home Page for Flairme. Gets form that accepts reddit link as input and sends with a POST to 'query/'
 def home(request):

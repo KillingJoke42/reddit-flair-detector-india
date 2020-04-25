@@ -29,6 +29,7 @@ import joblib
 # re and nltk are NLP libraries that are required to cleanup the dataset we make
 import re
 import nltk
+nltk.download('stopwords')
 from nltk.corpus import stopwords
 
 # -------CODE BEGINS--------
