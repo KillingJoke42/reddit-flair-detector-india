@@ -25,7 +25,7 @@ SECRET_KEY = 'mid=_5u-xv&kw_)@%(ic9_+qk(8o6-#=8e5(!9=wye++8fv*%x'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['herokudjangoapp.flairme.com']
 
 
 # Application definition
