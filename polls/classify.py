@@ -1,5 +1,18 @@
+"""
+classify.py: get flair predictions for reddit posts. 
+Author: Anant Raina
+Date: 8th April, 2020
+Last Commit: 24th April, 2020
+Trains the models over 750 hot posts from r/India and also gets the prediction using a given classifier
+"""
+
+#CSV to open dataset that is of the .csv format
 from csv import reader
+
+# Numpy dependancy for dataset management within python
 import numpy as np
+
+# Machine Leanring Dependancies from sklearn
 from sklearn.pipeline import Pipeline
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.feature_extraction.text import TfidfTransformer
@@ -8,30 +21,29 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.linear_model import LogisticRegression
 from sklearn.linear_model import SGDClassifier
-
 from sklearn import preprocessing
+
+# Joblib to save the Machine Learning Model
 import joblib
 
-import numpy as np
-from numpy import array
-from numpy import asarray
-from numpy import zeros
+# re and nltk are NLP libraries that are required to cleanup the dataset we make
 import re
 import nltk
 from nltk.corpus import stopwords
-from tensorflow.keras import models, layers
-from tensorflow.keras.preprocessing.text import Tokenizer
-from tensorflow.keras.preprocessing.sequence import pad_sequences
 
+# -------CODE BEGINS--------
+
+#Get all the symbols that are undesired and unwanted in the training/testing set
 REPLACE_BY_SPACE_RE = re.compile('[/(){}\[\]\|@,;]')
 BAD_SYMBOLS_RE = re.compile('[^0-9a-z #+,_\"]')
 STOPWORDS = set(stopwords.words('english'))
-
 TAG_RE = re.compile(r'<[^>]+>')
 
+# Remove HTML tags if any from the samples
 def remove_tags(text):
     return TAG_RE.sub('', text)
 
+# Perform removal of unwanted symbols from the samples
 def preprocess_text(text):
     text = text.lower()
     text = remove_tags(text)
@@ -40,6 +52,7 @@ def preprocess_text(text):
     text = ' '.join(word for word in text.split() if word not in STOPWORDS)
     return text
 
+# prepare a training set: Outputs train_data, labels as strings, labels as integers, and the mapping between the two
 def prepare_train_data():
 	X_train = list()
 	y_train_text = list()
@@ -75,6 +88,11 @@ def prepare_train_data():
 
 X_train, y_train_text, y_train_vectored, y_train = prepare_train_data()
 
+# Train ML models on the train data. Four types of models were chosen for testing:
+# 1) Native Baye's Classifier
+# 2) Random Forrest Model
+# 3) Linear Support Vector Machine
+# 4) Logistic Regression
 def ml_train(model_type):
 	
 	if model_type == "baye":
@@ -123,6 +141,7 @@ def ml_train(model_type):
 		ml_train("regression")
 		ml_train("random_forrest")
 
+# Get prediction over a test string. Requires a modelfile as input (.sav format) and the test string
 def classify(classifier, text):
 	X_test = np.array([preprocess_text(text)])
 	predicted = classifier.predict(X_test)
